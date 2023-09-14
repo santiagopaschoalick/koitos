@@ -1,0 +1,27 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: apresentacao
+  namespace: apresentacao
+  labels:
+    app: apresentacao
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: apresentacao
+  template:
+    metadata:
+      labels:
+        app: apresentacao
+    spec:
+      containers:
+      - name: apresentacao
+        image: paulbouwer/hello-kubernetes:1.10
+        ports:
+        - containerPort: 8080
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: MESSAGE 
+          value: "Cluster K3S - KOITOS"
