@@ -24,4 +24,4 @@ spec:
         imagePullPolicy: IfNotPresent
         env:
         - name: MESSAGE 
-          value: "Cluster K3S - KOITOS"
+          value: "Cluster K3S - KOITOS - SYNC"
