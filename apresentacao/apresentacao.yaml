@@ -1,6 +1,6 @@
 ---
 apiVersion: apps/v1
-kind: Deployment143234
+kind: Deployment
 metadata:
   name: apresentacao
   namespace: apresentacao
