@@ -1,0 +1,93 @@
+replicaCount: 1
+
+image:
+  pullPolicy: IfNotPresent
+
+envEnabled: true
+env:
+- name: "ENV_FOR_DYNACONF"
+  value: "development"
+- name: "TOOSEGUROS_USE_APM"
+  value: "true"
+- name: "ELASTIC_APM_SERVER_URL"
+  value: "http://172.20.89.206:8200"
+- name: "ELASTIC_APM_SERVICE_NAME"
+  value: "K8S_ATENDIMENTO_API"
+- name: "ELASTIC_APM_ENVIRONMENT"
+  value: "development"
+- name: "DYNACONF_CRM_API"
+  value: "https://tooseguros-hml.plusoftomni.com.br/api/ConsultaOcorrencias"
+- name: "DYNACONF_PROTOCOL_API"
+  value: "http://172.20.115.194/v1"
+- name: "DYNACONF_OCCURRENCE_API"
+  value: "http://172.20.68.162/v1/occurrence/async"
+- name: "DYNACONF_SQS_URI"
+  value: "https://sqs.us-east-2.amazonaws.com/851899389592/atendimento-jornada-cliente.fifo"
+- name: "AWS_DEFAULT_REGION"
+  value: "us-east-2"
+- name: "AWS_REGION"
+  value: "us-east-2"
+- name: "DYNACONF_OCCURRENCE_TIME_RANGE"
+  value: "10"
+- name: "DYNACONF_DEFAULT_PRODUCTS_DEADLINE"
+  value: "30"
+
+secretEnabled: true
+secret:
+- name: "DYNACONF_MONGODB_DSN"
+  key: "DYNACONF_MONGODB_DSN"
+- name: "DYNACONF_DATABASE_DSN"
+  key: "DYNACONF_DATABASE_DSN"
+- name: "DYNACONF_DATABASE_I4PRO_DSN"
+  key: "DYNACONF_DATABASE_I4PRO_DSN"
+- name: "DYNACONF_CRM_USER"
+  key: "DYNACONF_CRM_USER"
+- name: "DYNACONF_CRM_PASSWORD"
+  key: "DYNACONF_CRM_PASSWORD"
+- name: "AWS_ACCESS_KEY_ID"
+  key: "AWS_ACCESS_KEY_ID"
+- name: "AWS_SECRET_ACCESS_KEY"
+  key: "AWS_SECRET_ACCESS_KEY"
+
+healthCheck:
+  path: /v1/healthcheck
+  port: 80
+
+resource:
+  limits:
+    memory: 512Mi
+    cpu: 150m
+  requests:
+    memory: 128Mi
+    cpu: 50m
+
+service:
+  type: ClusterIP
+  port: 80
+  name: http
+
+ingress:
+  enabled: true
+  authEnabled: true
+  public: true
+  env: dev
+  className: "nginx-public"
+
+dnsEnabled: true
+dnsConfig:
+  nameservers:
+  - 10.191.26.10
+  searches:
+  - svc.cluster.local 
+  - cluster.local 
+  - us-east-2.compute.internal 
+  - tooseguros.com.br
+dnsPolicy: None
+
+autoscaling:
+  enabled: true
+  minReplicas: 1
+  maxReplicas: 2
+  cpuEnabled: true
+  targetCPUUtilizationPercentage: 80
+  memoryEnabled: false
