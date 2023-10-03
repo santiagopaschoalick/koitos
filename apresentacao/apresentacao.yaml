@@ -26,9 +26,9 @@ spec:
         - name: MESSAGE 
           value: "KOITOS - I4PRO"
         livenessProbe:
-        exec:
-          command:
-          - cat
-          - /etc/issue
-        initialDelaySeconds: 5
-        periodSeconds: 5
+          exec:
+            command:
+            - cat
+            - /etc/issue
+          initialDelaySeconds: 5
+          periodSeconds: 5
