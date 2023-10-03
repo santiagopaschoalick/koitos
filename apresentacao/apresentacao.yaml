@@ -24,7 +24,7 @@ spec:
         imagePullPolicy: IfNotPresent
         env:
         - name: MESSAGE 
-          value: "Cluster K3S - KOITOS - 18/09 15:16"
+          value: "KOITOS - I4PRO"
         livenessProbe:
         exec:
           command:
